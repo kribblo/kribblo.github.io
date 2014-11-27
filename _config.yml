@@ -1,0 +1,9 @@
+defaults:
+  - 
+    scope:
+      path: ""
+    values:
+      author: "Kristoffer Lundén"
+      layout: "wrapper"
+      title: "kribblonet"
+
