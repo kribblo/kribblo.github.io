@@ -129,7 +129,10 @@
 	<script>
 
 		function getZeroPaddedValue(id) {
-			return ('00'  + document.getElementById(id).value).slice(-2);
+			var input = document.getElementById(id);
+			var zeroPadded = ('00' + input.value).slice(-2);
+			input.value = zeroPadded;
+			return zeroPadded;
 		}
 
 		function updateColor() {
@@ -156,7 +159,6 @@
 		}
 
 		updateColor();
-		//document.body.style.opacity = 1;
 	</script>
 </body>
 </html>
