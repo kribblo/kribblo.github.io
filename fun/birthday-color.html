@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>your birthday color</title>
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
+	<style>
+		* {
+			margin: 4px;
+			padding: 0;
+			position: relative;
+		}
+
+		body {
+			font-family: 'Lato', sans-serif;
+			font-weight: 400;
+		}
+
+		html, body, .container {
+			height: 100%;
+		}
+
+		body > .container {
+			height: auto;
+			min-height: 100%;
+		}
+
+		.content {
+			text-align: center;
+		}
+
+		.main.content {
+			width: 100%;
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%)
+		}
+
+		.main.content table {
+			margin: 1em auto;
+		}
+
+		.main.content th, .main.content td {
+			font-weight: 300;
+		}
+
+		.main.content th {
+			text-align: right;
+		}
+
+		label, input {
+			width: 3em;
+			height: 1.6em;
+			display: inline-block;
+		}
+
+		label {
+			text-align: center;
+			border: 1px solid transparent;
+		}
+
+		input {
+			font-size: 1.1em;
+			border: 1px solid;
+			text-align: right;
+		}
+
+		a {
+			color: inherit;
+		}
+
+		h1 {
+			font-size: 3em;
+			font-weight: 300;
+			transform:scale(1, 1.4);
+		}
+
+		h2 {
+			font-size: 2em;
+			font-weight: 300;
+			transform:scale(1, 1.4);
+		}
+
+		.footer {
+			clear: both;
+			position: relative;
+			z-index: 10;
+			height: 3em;
+			margin-top: -3em;
+			font-size: small;
+			font-weight: 400;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header content">
+			<h1>your birthday color</h1>
+		</div>
+
+		<div class="main content">
+			<h2>please enter your birthday</h2>
+
+			<div>
+				<label for="day">dd</label> / <label for="month">mm</label> / <label for="year">yy</label>
+			</div>
+			<div>
+				<input type="number" min="01" max="31" name="day" id="day" onchange="updateColor()" value="21"> /
+				<input type="number" min="01" max="12" name="month" id="month" onchange="updateColor()" value="12"> /
+				<input type="number" min="00" max="99" name="year" id="year" onchange="updateColor()" value="73">
+			</div>
+
+			<table>
+				<tr>
+					<th>main color:</th><td id="color"></td>
+				</tr>
+				<tr>
+					<th>complement:</th><td id="complement"></td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+	<div class="footer content">
+		quick experiment inspired by the beautiful <a href="http://whatcolourisit.scn9a.org/" target="_blank">whatcolourisit</a> clock
+	</div>
+	<script>
+
+		function updateColor() {
+			var hexColor = document.getElementById('day').value + document.getElementById('month').value + document.getElementById('year').value;
+			var complementColor = (0xffffff ^ parseInt(hexColor, 16));
+
+			var hexColorString = '#' + hexColor;
+			var complementColorString = '#' + (('000000') + complementColor.toString(16)).slice(-6);
+
+			document.body.style.backgroundColor = hexColorString;
+			document.body.style.color = complementColorString;
+
+			var inputs = document.getElementsByTagName('input');
+			for (var i = 0; i < inputs.length; i++) {
+				var input = inputs[i];
+				input.style.backgroundColor = hexColorString;
+				input.style.color = complementColorString;
+				input.style.borderColor = complementColorString;
+			}
+
+			document.getElementById('color').innerText = hexColorString;
+			document.getElementById('complement').innerText = complementColorString;
+
+		}
+
+		updateColor();
+		//document.body.style.opacity = 1;
+	</script>
+</body>
+</html>
