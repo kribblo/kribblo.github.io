@@ -128,8 +128,12 @@
 	</div>
 	<script>
 
+		function getZeroPaddedValue(id) {
+			return ('00'  + document.getElementById(id).value).slice(-2);
+		}
+
 		function updateColor() {
-			var hexColor = document.getElementById('day').value + document.getElementById('month').value + document.getElementById('year').value;
+			var hexColor = getZeroPaddedValue('day') + getZeroPaddedValue('month') + getZeroPaddedValue('year');
 			var complementColor = (0xffffff ^ parseInt(hexColor, 16));
 
 			var hexColorString = '#' + hexColor;
