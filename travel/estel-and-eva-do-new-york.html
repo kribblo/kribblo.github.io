@@ -11,7 +11,7 @@
 		}
 
 		html {
-			background: url(http://www.mrwallpaper.com/wallpapers/New-York-City-Lights-1920x1080.jpg) no-repeat center center fixed;
+			background: no-repeat fixed center;
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;
@@ -31,14 +31,12 @@
 		#text {
 			font-family: "Berkshire Swash", cursive;
 
-
 			/* WebKit (Safari/Chrome) Only */
 			-webkit-text-stroke: 1px black;
 
 			/* If we weren't using text-shadow, we'd set a fallback color
 				 and use this to set color instead
 				-webkit-text-fill-color: white; */
-
 
 			text-shadow: 3px 3px 0 #000,
 				/* Simulated effect for Firefox and Opera
@@ -69,6 +67,16 @@
 <script src="../js/textFit.min.js"></script>
 <script>
 
+	var backgrounds = [
+		'http://www.mrwallpaper.com/wallpapers/New-York-City-Lights-1920x1080.jpg',
+		'http://img0.mxstatic.com/wallpapers/f4a2bcfd7e7891fd1b7e574644545263_large.jpeg',
+		'http://cupegraf.com/data_images/wallpapers/30/393646-time-square.jpg',
+		'http://cdn.wonderfulengineering.com/wp-content/uploads/2015/04/new-york-wallpaper-22.jpg'
+	];
+
+	var background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+	document.getElementsByTagName('html')[0].style.backgroundImage = 'url(' + background + ')';
 
 	var viewportWidth = document.documentElement.clientWidth;
 	var viewportHeight = document.documentElement.clientHeight;
@@ -91,11 +99,12 @@
 	planeElement.style.fontSize = parseInt(textElement.children[0].style.fontSize) / 2 + 'px';
 
 	countdown(
-			new Date(2015, 12, 29, 17, 20, 0),
+			new Date(2015, 12, 29, 6, 55, 0),
 			function (ts) {
 				countdownElement.innerHTML =
-						ts.months + ' månader, ' +
+						ts.months + ' mån, ' +
 						ts.days + ' dagar, ' +
+						ts.hours + ' timmar, ' +
 						ts.minutes + ' minuter och ' +
 						ts.seconds + ' sekunder';
 
