@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<link href="http://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet">
+	<style>
+
+		html {
+			background: url(http://www.mrwallpaper.com/wallpapers/New-York-City-Lights-1920x1080.jpg) no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+
+		div {
+			text-align: center;
+			color: white;
+			margin: 0 auto;
+
+			text-shadow: 1px 1px 3px #000;
+
+			font-family: arial, sans-serif;
+		}
+
+		#text {
+			font-family: "Berkshire Swash", cursive;
+
+
+			/* WebKit (Safari/Chrome) Only */
+			-webkit-text-stroke: 1px black;
+
+			/* If we weren't using text-shadow, we'd set a fallback color
+				 and use this to set color instead
+				-webkit-text-fill-color: white; */
+
+
+			text-shadow: 3px 3px 0 #000,
+				/* Simulated effect for Firefox and Opera
+				   and nice enhancement for WebKit */ -1px -1px 0 #000,
+			1px -1px 0 #000,
+			-1px 1px 0 #000,
+			1px 1px 0 #000;
+
+		}
+
+		.nowrap {
+			white-space: nowrap;
+		}
+
+	</style>
+	<title>Estel and Eva do New York</title>
+</head>
+<body>
+	<div id="text">
+		<span class="nowrap">Estel and Eva</span><br>
+		<span class="nowrap">do</span><br>
+		<span class="nowrap">New York</span>
+	</div>
+	<div id="plane">Planet lyfter om:</div>
+	<div id="countdown"></div>
+</body>
+<script src="../js/countdown.min.js"></script>
+<script src="../js/textFit.min.js"></script>
+<script>
+
+
+	var viewportWidth = document.documentElement.clientWidth;
+	var viewportHeight = document.documentElement.clientHeight;
+
+	var minSize = Math.min(viewportWidth, viewportHeight);
+
+	var size = minSize * 0.7;
+
+	var textElement = document.getElementById('text');
+
+	textElement.style.width = size + 'px';
+	textElement.style.height = size + 'px';
+
+	textFit(textElement, {alignHoriz: true, alignVert: true});
+
+	var countdownElement = document.getElementById('countdown');
+	countdownElement.style.fontSize = parseInt(textElement.children[0].style.fontSize) / 2 + 'px';
+
+	var planeElement = document.getElementById('plane');
+	planeElement.style.fontSize = parseInt(textElement.children[0].style.fontSize) / 2 + 'px';
+
+	countdown(
+			new Date(2015, 12, 29, 17, 20, 0),
+			function (ts) {
+				countdownElement.innerHTML =
+						ts.months + ' månader, ' +
+						ts.days + ' dagar, ' +
+						ts.minutes + ' minuter och ' +
+						ts.seconds + ' sekunder';
+
+
+			},
+			countdown.MONTHS | countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+
+
+</script>
+</html>
