@@ -34,6 +34,8 @@
 		}
 
 		#text {
+			position: relative;
+
 			font-family: "Berkshire Swash", cursive;
 
 			/* WebKit (Safari/Chrome) Only */
@@ -58,8 +60,10 @@
 
 		img {
 			position: absolute;
-			top: 10%;
+			bottom: -20%;
 			opacity: 0.8;
+			width: 20%;
+			height: 25%;
 		}
 
 		#hanna {
@@ -74,12 +78,12 @@
 	<title>Estel and Eva do New York</title>
 </head>
 <body>
-	<img id="stoffe" src="ny_stoffe_circle.png">
-	<img id="hanna" src="ny_hanna_circle.png">
 	<div id="text">
 		<span class="nowrap">Estel and Eva</span><br>
 		<span class="nowrap">do</span><br>
 		<span class="nowrap">New York</span>
+		<img id="stoffe" src="ny_stoffe_circle.png">
+		<img id="hanna" src="ny_hanna_circle.png">
 	</div>
 	<div id="plane">Planet lyfter om:</div>
 	<div id="countdown"></div>
