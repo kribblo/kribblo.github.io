@@ -16,6 +16,7 @@
 
             p {
                 font-size: 20vmin;
+                font-weight: bolder;
             }
         </style>
     </head>
@@ -31,8 +32,10 @@
             var today = new Date();
             var year = today.getFullYear();
             var month = padToTwo(today.getMonth() + 1);
-            var day = padToTwo(today.getDate());
+            var day = padToTwo(today.getDate() + 3);
             var url = 'http://api.dryg.net/dagar/v2.1/' + year + '/' + month + '/' + day;
+
+
             $.getJSON(url, function (json) {
                 console.log("toJSON", json);
                 if (json.dagar && json.dagar.length > 0) {
