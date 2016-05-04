@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Är det fredag?</title>
+
+        <style>
+            body {
+                text-align: center;
+            }
+
+            h1 {
+
+            }
+
+            p {
+                font-size: 20vmin;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Är det fredag?</h1>
+        <p></p>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script>
+            function padToTwo(num) {
+                return ('0' + num).slice(-2);
+            }
+
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = padToTwo(today.getMonth() + 1);
+            var day = padToTwo(today.getDate());
+            var url = 'http://api.dryg.net/dagar/v2.1/' + year + '/' + month + '/' + day;
+            $.getJSON(url, function (json) {
+                console.log("toJSON", json);
+                if (json.dagar && json.dagar.length > 0) {
+                    var idag = json.dagar[0];
+                    var svar = 'NÄ';
+                    if (idag.veckodag === 'Fredag') {
+                        svar = 'JA';
+                    } else if (idag.veckodag === 'L\u00f6rdag' || idag.veckodag === 'S\u00f6ndag') {
+                        svar = 'Nä, men HÄLJA!';
+                    } else if (idag['dag f\u00f6re arbetsfri helgdag'] === 'Ja') {
+                        svar = 'TYP';
+                    }
+                    $('p').text(svar);
+                } else {
+                    console.error(json);
+                }
+            });
+        </script>
+    </body>
+</html>
