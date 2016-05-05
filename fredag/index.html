@@ -35,14 +35,13 @@
             var day = padToTwo(today.getDate());
             var url = 'http://api.dryg.net/dagar/v2.1/' + year + '/' + month + '/' + day;
 
-
             $.getJSON(url, function (json) {
                 console.log("toJSON", json);
                 if (json.dagar && json.dagar.length > 0) {
                     var idag = json.dagar[0];
                     var svar = 'NÄ';
                     if (idag.veckodag === 'Fredag') {
-                        svar = 'JA';
+                        svar = 'yeeeeEEESSSSS';
                     } else if (idag['r\u00f6d dag'] === 'Ja' || idag.veckodag === 'L\u00f6rdag' || idag.veckodag === 'S\u00f6ndag') {
                         svar = 'Nä, men HÄLJA!';
                     } else if (idag['dag f\u00f6re arbetsfri helgdag'] === 'Ja') {
