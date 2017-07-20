@@ -12,12 +12,15 @@
                 box-sizing: inherit;
             }
 
-            html, body {
-                /*min-height: 100%;*/
+            html, body, nav, #container {
+                height: 100%;
             }
 
             body {
                 margin: 0;
+            }
+
+            #container {
                 display: inline-flex;
             }
 
@@ -37,9 +40,12 @@
                 padding-top: 1rem;
             }
 
+            #sidebar {
+                border-right: 1px solid #999;
+            }
+
             #sidebar h1 {
                 border-bottom: 1px solid #999;
-                border-right: 1px solid #999;
                 margin: 0;
                 padding-top: 0.2rem;
                 padding-right: 1rem;
@@ -67,11 +73,22 @@
                     display: none;
                 }
             }
+
+            #menu {
+                font-size: smaller;
+                line-height: 100%;
+                vertical-align: middle;
+                background-color: black;
+                color: white;
+            }
+
         </style>
     </head>
     <body>
-        <nav id="sidebar"></nav>
-        <div id="container"></div>
+        <div id="container">
+            <nav id="sidebar"></nav>
+            <article id="content"></article>
+        </div>
         <script src="../js/promise.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.3.1/markdown-it.min.js"></script>
@@ -88,11 +105,11 @@
                 }).then(function(markdown) {
                 var html = md.render(markdown);
 
-                var container = document.getElementById('container');
+                var content = document.getElementById('content');
                 var sidebar = document.getElementById('sidebar');
-                container.innerHTML = html;
+                content.innerHTML = html;
 
-                var el = container.firstElementChild;
+                var el = content.firstElementChild;
                 var section;
 
                 while(el) {
@@ -100,14 +117,14 @@
                     if(el.tagName.toLowerCase() === 'h1') {
                         section = document.createElement('section');
                         section.classList.add('closed');
-                        container.insertBefore(section, el);
+                        content.insertBefore(section, el);
                         section.appendChild(el);
                         el.addEventListener('click', toggleLandscapeOnlyFactory(section));
                         addSidebarClone(el);
                     } else if(section) {
                         section.appendChild(el);
                     } else {
-                        container.removeChild(el);
+                        content.removeChild(el);
                     }
                     el = next;
                 }
@@ -146,6 +163,14 @@
                     }
                 }
 
+                function save(key, value) {
+                    localStorage.setItem(key, JSON.stringify(value));
+                }
+
+                function load(key, fallback) {
+                    var value = localStorage.getItem(key);
+                    return value ? JSON.parse(value) : fallback;
+                }
             });
 
         </script>
