@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Markdown Viewer</title>
+        <style>
+            html {
+                box-sizing: border-box;
+            }
+
+            *, *:before, *:after {
+                box-sizing: inherit;
+            }
+
+            html, body {
+                /*min-height: 100%;*/
+            }
+
+            body {
+                margin: 0;
+                display: inline-flex;
+            }
+
+            section {
+                margin: 0 1em;
+            }
+
+            section > h1 {
+                font-size: 2em;
+                margin-top: 0;
+                margin-bottom: 1em;
+            }
+
+            #sidebar {
+                border-right: 1px solid #999;
+            }
+
+            #sidebar h1 {
+                border-bottom: 1px solid #999;
+                margin: 0;
+                padding-top: 0.2rem;
+                padding-right: 1rem;
+                padding-left: 0.4rem;
+                padding-bottom: 0.2rem;
+                font-size: 1.6em;
+            }
+
+            #sidebar h1:first-of-type {
+                /*border-top: none;*/
+            }
+
+            @media all and (orientation: portrait) {
+                #sidebar {
+                    display: none;
+                }
+
+                section.closed > :not(h1) {
+                    display: none;
+                }
+            }
+
+            @media all and (orientation: landscape) {
+                #sidebar, #container {
+                    /*display: table-cell;*/
+                }
+
+                section.closed > * {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav id="sidebar"></nav>
+        <div id="container"></div>
+        <script src="../js/promise.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.3.1/markdown-it.min.js"></script>
+        <script>
+            var md = window.markdownit({
+                html: true,
+                linkify: true,
+                typographer: true
+            });
+
+            fetch('test.md')
+                .then(function(response) {
+                    return response.text()
+                }).then(function(markdown) {
+                var html = md.render(markdown);
+
+                var container = document.getElementById('container');
+                var sidebar = document.getElementById('sidebar');
+                container.innerHTML = html;
+
+                var el = container.firstElementChild;
+                var section;
+
+                function addSidebarClone(original) {
+                    var clone = original.cloneNode(true);
+                    clone.addEventListener('click', toggleSectionFactory(original.parentNode));
+                    sidebar.appendChild(clone);
+                }
+
+                function toggleSectionFactory(section) {
+                    return function() {
+                        if(section.classList.contains('closed')) {
+                            section.classList.remove('closed');
+                        } else {
+                            section.classList.add('closed');
+                        }
+                    }
+                }
+
+                function toggleLandscapeOnlyFactory(section) {
+                    var toggle = toggleSectionFactory(section);
+                    return function() {
+                        if(screen.width < screen.height) {
+                            toggle();
+                        }
+                    }
+                 }
+
+                while(el) {
+                    var next = el.nextElementSibling;
+                    if(el.tagName.toLowerCase() === 'h1') {
+                        section = document.createElement('section');
+                        section.classList.add('closed');
+                        container.insertBefore(section, el);
+                        section.appendChild(el);
+                        el.addEventListener('click', toggleLandscapeOnlyFactory(section));
+                        addSidebarClone(el);
+                    } else if(section) {
+                        section.appendChild(el);
+                    } else {
+                        container.removeChild(el);
+                    }
+                    el = next;
+                }
+
+                // TODO: remember last opened
+                document.querySelector('#sidebar h1').click();
+            });
+
+        </script>
+    </body>
+</html>
