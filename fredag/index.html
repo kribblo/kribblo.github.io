@@ -34,7 +34,7 @@
             var year = today.getFullYear();
             var month = padToTwo(today.getMonth() + 1);
             var day = padToTwo(today.getDate());
-            var url = 'http://api.dryg.net/dagar/v2.1/' + year + '/' + month + '/' + day;
+            var url = 'https://api.dryg.net/dagar/v2.1/' + year + '/' + month + '/' + day;
 
             $.getJSON(url, function(json) {
                 console.log("toJSON", json);
